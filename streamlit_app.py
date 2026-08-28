@@ -195,6 +195,7 @@ movies_data = [
     {"title": "X2", "year": 2003, "director": "Bryan Singer", "genre": ["슈퍼히어로", "액션"], "critic": 85, "audience": 87},
     {"title": "배트맨 비긴즈", "year": 2005, "director": "Christopher Nolan", "genre": ["슈퍼히어로", "액션"], "critic": 84, "audience": 88},
     {"title": "수퍼맨 리턴즈", "year": 2006, "director": "Bryan Singer", "genre": ["슈퍼히어로", "액션"], "critic": 76, "audience": 72},
+    {"title": "다크나이트 라이즈", "year": 2012, "director": "Christopher Nolan", "genre": ["슈퍼히어로", "액션"], "critic": 87, "audience": 91},
     {"title": "다빈치 코드", "year": 2006, "director": "Ron Howard", "genre": ["드라마", "미스터리"], "critic": 25, "audience": 77},
     {"title": "미녀는 괴로워", "year": 2006, "director": "김윤석", "genre": ["드라마", "로맨스"], "critic": 79, "audience": 80},
     {"title": "아이언맨", "year": 2008, "director": "Jon Favreau", "genre": ["슈퍼히어로", "액션"], "critic": 79, "audience": 79},

@@ -38,14 +38,14 @@ st.markdown("""
     }
     .best-worst-section {
         display: flex;
-        gap: 2rem;
-        margin: 2rem 0;
+        gap: 1.5rem;
+        margin: 1.5rem 0;
     }
     .best-card, .worst-card {
         flex: 1;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        padding: 1.2rem;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
     }
     .best-card {
         background: linear-gradient(135deg, #81C784 0%, #4CAF50 100%);
@@ -56,40 +56,43 @@ st.markdown("""
         color: white;
     }
     .card-title {
-        font-size: 2em;
+        font-size: 1.5em;
         font-weight: bold;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
     .movie-item {
         background: white;
-        padding: 1rem;
-        margin: 0.8rem 0;
-        border-radius: 8px;
+        padding: 0.7rem;
+        margin: 0.5rem 0;
+        border-radius: 6px;
         color: #333;
+        font-size: 0.95em;
     }
     .movie-rank {
-        font-size: 1.5em;
+        font-size: 1.2em;
         font-weight: bold;
         display: inline-block;
-        width: 40px;
+        width: 30px;
         text-align: center;
     }
     .movie-info {
         display: inline-block;
-        margin-left: 1rem;
+        margin-left: 0.8rem;
+        vertical-align: middle;
     }
     .movie-title {
         font-weight: bold;
-        font-size: 1.1em;
+        font-size: 1em;
+        margin-bottom: 0.2rem;
     }
     .movie-meta {
-        font-size: 0.9em;
+        font-size: 0.8em;
         color: #666;
     }
     .movie-score {
         float: right;
         font-weight: bold;
-        font-size: 1.2em;
+        font-size: 1em;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -224,24 +227,26 @@ if search_query:
 filtered_df = filtered_df[filtered_df['year'].isin(selected_years)]
 filtered_df = filtered_df[filtered_df['genre'].apply(lambda x: any(g in selected_genres for g in x))]
 
-# Best 5 & Worst 5
-best_5 = filtered_df.nlargest(5, 'avg_score')
-worst_5 = filtered_df.nsmallest(5, 'avg_score')
+# Best 3 & Worst 3 (장르 기반)
+best_3 = filtered_df.nlargest(3, 'avg_score')
+worst_3 = filtered_df.nsmallest(3, 'avg_score')
 
 st.markdown("<div class='best-worst-section'>", unsafe_allow_html=True)
 
-# Best 5
-with st.container(border=False):
-    st.markdown("<div class='best-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='card-title'>🏆 Best 5</div>", unsafe_allow_html=True)
+# Best 3
+col_best, col_worst = st.columns(2)
 
-    for idx, (i, movie) in enumerate(best_5.iterrows(), 1):
+with col_best:
+    st.markdown("<div class='best-card'>", unsafe_allow_html=True)
+    st.markdown("<div class='card-title'>🏆 Best 3</div>", unsafe_allow_html=True)
+
+    for idx, (i, movie) in enumerate(best_3.iterrows(), 1):
         st.markdown(f"""
         <div class='movie-item'>
             <span class='movie-rank'>#{idx}</span>
             <div class='movie-info'>
                 <div class='movie-title'>{movie['title']}</div>
-                <div class='movie-meta'>{movie['director']} · {movie['year']} · {', '.join(movie['genre'])}</div>
+                <div class='movie-meta'>{movie['director']} · {movie['year']}</div>
             </div>
             <div class='movie-score'>⭐ {movie['avg_score']:.1f}%</div>
         </div>
@@ -249,18 +254,18 @@ with st.container(border=False):
 
     st.markdown("</div>", unsafe_allow_html=True)
 
-# Worst 5
-with st.container(border=False):
+# Worst 3
+with col_worst:
     st.markdown("<div class='worst-card'>", unsafe_allow_html=True)
-    st.markdown("<div class='card-title'>📉 Worst 5</div>", unsafe_allow_html=True)
+    st.markdown("<div class='card-title'>📉 Worst 3</div>", unsafe_allow_html=True)
 
-    for idx, (i, movie) in enumerate(worst_5.iterrows(), 1):
+    for idx, (i, movie) in enumerate(worst_3.iterrows(), 1):
         st.markdown(f"""
         <div class='movie-item'>
             <span class='movie-rank'>#{idx}</span>
             <div class='movie-info'>
                 <div class='movie-title'>{movie['title']}</div>
-                <div class='movie-meta'>{movie['director']} · {movie['year']} · {', '.join(movie['genre'])}</div>
+                <div class='movie-meta'>{movie['director']} · {movie['year']}</div>
             </div>
             <div class='movie-score'>⭐ {movie['avg_score']:.1f}%</div>
         </div>
